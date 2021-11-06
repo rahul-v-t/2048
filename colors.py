@@ -1,7 +1,7 @@
 GRID_COLOR = "#a39489"
 EMPTY_CELL_COLOR = "#c2b3a9"
-WINNER_BG = "ffcc00"
-LOSER_BG = "a39489"
+WINNER_BG = "#ffcc00"
+LOSER_BG = "#a39489"
 
 CELL_COLOURS = {
     2: "#fcefe6",
