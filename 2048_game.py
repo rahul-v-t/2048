@@ -36,21 +36,22 @@ class Game(tk.Frame):
                     height=150
                 )
                 cell_frame.grid(row=i, column=j, padx=5, pady=5)
-                cell_number =tk.Label(self.main_grid, bg=c. EMPTY_CELL_COLOR)
+                cell_number =tk.Label(self.main_grid, bg=c.EMPTY_CELL_COLOR)
                 cell_number.grid(row=i, column=j)
                 cell_data = {"frame": cell_frame, "number": cell_number}
                 row.append(cell_data)
-                self.cells.append(row)
+            self.cells.append(row)
 
-                #make score header
-                score_frame = tk.Frame(self)
-                score_frame.place(relx=0.5, y=45, anchor="center")
-                tk.Label(
-                    score_frame,
-                    text = "Score",   
-                ).grid(row=0)
-                self.score_label = tk.Label(score_frame, text="0")
-                self.score_label.grid(row=1)
+        #make score header
+        score_frame = tk.Frame(self)
+        score_frame.place(relx=0.5, y=45, anchor="center")
+        tk.Label(
+            score_frame,
+            text = "Score",
+            font=c.SCORE_LABEL_FONT   
+        ).grid(row=0)
+        self.score_label = tk.Label(score_frame, text="0", font=c.SCORE_FONT)
+        self.score_label.grid(row=1)
 
     def start_game(self):
 
@@ -64,6 +65,7 @@ class Game(tk.Frame):
         self.cells[row][col]["number"].configure(
             bg=c.CELL_COLOURS[2],
             fg=c.CELL_NUMBER_COLOURS[2],
+            font=c.CELL_NUMBER_FONT[2],
             text="2"
         )
         while(self.matrix[row][col] != 0):
@@ -85,7 +87,7 @@ class Game(tk.Frame):
         for i in range(4):
             fill_position = 0
             for j in range(4):
-                if self.matrix[i][j] !=0:
+                if self.matrix[i][j] != 0:
                     new_matrix[i][fill_position] = self.matrix[i][j]
                     fill_position += 1
         self.matrix = new_matrix
@@ -138,6 +140,7 @@ class Game(tk.Frame):
                     self.cells[i][j]["number"].configure(
                         bg=c.CELL_COLOURS[cell_value],
                         fg=c.CELL_NUMBER_COLOURS[cell_value],
+                        font=c.CELL_NUMBER_FONT[cell_value],
                         text=str(cell_value)
                     )
         self.score_label.configure(text=self.score)
@@ -208,11 +211,13 @@ class Game(tk.Frame):
     def game_over(self):
         if any(2048 in row for row in self.matrix):
             game_over_frame = tk.Frame(self.main_grid, borderwidth=2)
-            game_over_frame.place(relx=0.5, rely=0.5, ancho="center")
+            game_over_frame.place(relx=0.5, rely=0.5, anchor="center")
             tk.Label(
                 game_over_frame,
                 text="You Win",
-                bg=c.WINNER_BG
+                bg=c.WINNER_BG,
+                fg=c.GAME_OVER_FONT_COLOR,
+                font=c.GAME_OVER_FONT
             ).pack()
         elif not any(0 in row for row in self.matrix) and not self.horizontal_move_exists() and not self.vertical_move_exists():
             game_over_frame = tk.Frame(self.main_grid, borderwidth=2)
@@ -220,7 +225,9 @@ class Game(tk.Frame):
             tk.Label(
                 game_over_frame,
                 text="You Lose",
-                bg=c.LOSER_BG
+                bg=c.LOSER_BG,
+                fg=c.GAME_OVER_FONT_COLOR,
+                font=c.GAME_OVER_FONT
             ).pack()
 
         
